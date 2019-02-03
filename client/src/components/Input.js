@@ -25,6 +25,11 @@ class Input extends Component {
         this.setState({value : event.target.value});
     }
 
+    showMap=()=>{
+        console.log("show mappp"); 
+        
+    }
+
 
 
     render(){
@@ -33,6 +38,9 @@ class Input extends Component {
             <div>
                 <input type = "text" name = "name" value= {this.state.value} onChange ={this.handleChange} />
                 <button onClick ={this.displayInput}>Show Place</button>
+
+                <button onClick ={this.showMap}>Show Map</button>
+
             </div>
         )
     }
