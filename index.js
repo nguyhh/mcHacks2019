@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const routes = require('./routes/route');
 const path = require('path');
+
 require('dotenv').config();
 // db = mongoose.createConnection('mongodb://user:pass@localhost:port/database');
 
@@ -37,6 +38,8 @@ app.use('/route', routes);
 app.use((req, res, next)=>{
     res.send('Welcome to Express');
 });
+
+app.use('/products', product);
 
 app.listen(port, ()=>{
     console.log('Server running on port ' + port)

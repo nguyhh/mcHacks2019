@@ -3,10 +3,12 @@ const Schema = mongoose.Schema;
 
 //create schema for foodmap
 const FoodMapSchema = new Schema({
-  action: {
-    type: String,
-    required: [true, 'The Foodmap text field is required']
-  }
+  _id: {type: String},
+  latitude: {Number, required:true},
+  longitude: {Number, required:true},
+  centerName: {type: String, required: true, max:100},
+  centerType: {type: String, required: true, max:100},
+
 })
 
 //create model for foodmap
