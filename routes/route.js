@@ -1,32 +1,25 @@
 const express = require ('express');
 const router = express.Router();
-const foodMap = require('../models/foodmap');
+const FoodSource = require('../models/foodmap');
 
-router.get('/todos', (req, res, next) => {
+const product_controller= require('../controllers/product.controller');
 
-    //return all the data
-    foodMap.find({}, 'location')
-        .then(data => res.json(data))
-        .catch(next)
-
+router.route('/').get(function(req,res){//dpne
+    foodmap.find(function(err,FoodSource){
+        if(err){
+            console.log(err);
+        } else{
+            res.json(FoodSource);
+        }
+    });
 });
 
-router.post('/todos', (req, res, next) => {
-    if(req.body.location){
-        foodMap.create(req.body)
-        .then(data=> res.json(data))
-        .catch(next)
-    }else{
-        res.json({
-            error: "The input field is invalid"
-        })
-    }
+router.route('/:id').get(function(req,res){//done
+    let id = req.params.id;
+    foodmap.findById(id, function(err,food){
+        res.json(food);
+    });
 });
 
-router.delete('/todos/:id', (req, res, next) => {
-    foodMap.findOneAndDelete({"_id": req.params.id})
-    .then(data => res.json(data))
-    .catch(next)
-})
 
 module.exports = router;

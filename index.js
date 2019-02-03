@@ -1,11 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const routes = require('./routes/route');
+// const router = require('./routes/route');
 const path = require('path');
+const cors = require('cors');
+const router = express.Router();
+
 
 require('dotenv').config();
-// db = mongoose.createConnection('mongodb://user:pass@localhost:port/database');
 
 var db = mongoose.connection;
 
@@ -15,7 +17,6 @@ db.once('open', function(){
 })
 
 const app = express();
-
 const port = process.env.PORT || 5000;
 
 // connect to database
@@ -33,13 +34,14 @@ app.use((req, res, next)=>{
 });
 
 app.use(bodyParser.json());
-app.use('/route', routes);
+app.use('/FoodSource', router);//done
 
-app.use((req, res, next)=>{
-    res.send('Welcome to Express');
-});
+// app.use((req, res, next)=>{
+//     res.send('Welcome to Express');
+// });
+app.use(cors());
+app.use(bodyParser.json());
 
-app.use('/products', product);
 
 app.listen(port, ()=>{
     console.log('Server running on port ' + port)
@@ -49,4 +51,21 @@ app.use((req,res,next)=>{
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
+});
+
+router.route('/').get(function(req,res){//dpne
+    foodmap.find(function(err,FoodSource){
+        if(err){
+            console.log(err);
+        } else{
+            res.json(FoodSource);
+        }
+    });
+});
+
+router.route('/:id').get(function(req,res){//done
+    let id = req.params.id;
+    foodmap.findById(id, function(err,food){
+        res.json(food);
+    });
 });

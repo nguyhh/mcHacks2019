@@ -4,8 +4,9 @@ const Schema = mongoose.Schema;
 //create schema for foodmap
 const FoodMapSchema = new Schema({
   _id: {type: String},
-  latitude: {Number, required:true},
-  longitude: {Number, required:true},
+  food: {type: String},
+  latitude: {Number},
+  longitude: {Number},
   centerName: {type: String, required: true, max:100},
   centerType: {type: String, required: true, max:100},
 

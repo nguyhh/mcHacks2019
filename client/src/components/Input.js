@@ -2,40 +2,37 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 class Input extends Component {
+    constructor(props){
+        super(props);
+        this.state = {value :''};
+        this.displayInput = this.displayInput.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
 
     state = {
-        action: ""
+        value: ""
     }
 
-    addInput = () =>{
-        const place = {action: this.state.action}
+    displayInput = () =>{
+        console.log("ca marche : " + this.state.value);
+        // const centerName = {action: this.state.action}
 
-        if(place.action && place.action.length>0){
-            axios.post('/routes/route', place)
-                .then(res => {
-                    if(res.data){
-                        this.props.getPlace();
-                        this.setState({action:""})
-                    }
-                })
-                .catch(err => console.log(err))
-        }else{
-            console.log('input field required')
-        }
+
+        
     }
 
-    handleChange = (e) => {
-        this.setState({
-            action: e.target.value
-        })
+    handleChange(event) {
+        this.setState({value : event.target.value});
     }
+
+
 
     render(){
         let{ action } = this.state;
         return(
             <div>
-                <input type = "text" onChange = {this.handleChange} value ={action}/>
-                <button onClick ={this.addInput}>add Place</button>
+                <input type = "text" name = "name" value= {this.state.value} onChange ={this.handleChange} />
+                <button onClick ={this.displayInput}>Show Place</button>
             </div>
         )
     }

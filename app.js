@@ -17,9 +17,12 @@ client.connect(function(err) {
 
   const db = client.db(dbName);
 
-  findDocuments(db, function(){
-       client.close();
-  });
+//   findDocuments(db, function(){
+//        client.close();
+//   });
+    findFood(db, function(){
+        client.close();
+    })
 
  
 });
@@ -34,4 +37,18 @@ const findDocuments = function(db, callback) {
       console.log(docs);
       callback(docs);
     });
-  }
+}
+const findFood = function(db, callback){
+    const collection = db.collection('Location');
+
+    collection.find({
+        food: /lettuce/i
+    }).limit(5).toArray(function(err, docs){
+        if(err) throw err;
+
+        console.log(docs);
+    });
+}
+
+  
+
